@@ -3,6 +3,7 @@ import os
 from flask import Flask, render_template, request
 from flask_bootstrap import Bootstrap
 from flask_sqlalchemy import SQLAlchemy
+from validate_email import validate_email
 
 from password import SQLALCHEMY_DATABASE_URI
 import config
@@ -45,9 +46,12 @@ def homepage():
     if not email:
         return render_template('home.html')
     else:
-        res = Leak.query.filter_by(email=email).all()
-        return render_template('home.html', email=email, source=res)
-
+		if validate_email(email):
+			res = Leak.query.filter_by(email=email).all()
+			return render_template('home.html', email=email, source=res)
+		else:
+			res = Leak.query.filter(Leak.message.like('"'+email+'%"')).all()
+			return render_template('home.html', email=email, source=res)
 
 if __name__ == '__main__':
     app.run(debug=True)

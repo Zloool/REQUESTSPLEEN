@@ -50,8 +50,31 @@ def homepage():
 			res = Leak.query.filter_by(search_query=search_query).all()
 			return render_template('home.html', search_query=search_query, result_list=res)
 		else:
-			res = Leak.query.filter(Leak.message.like(search_query+"%")).all()
-			return render_template('home.html', search_query=search_query, result_list=res)
+			name_surname = search_query.split()
+			if len(name_surname) == 2:
+				name = name_surname[0]
+				surname = name_surname[1]
+				S = surname
+				s = surname[0]
+				N = name
+				n = name[0]
+				res = Leak.query.filter(Leak.email.like(S + "." + n + "%")).all()
+				res += Leak.query.filter(Leak.email.like(n + "." + S + "%")).all()
+				res += Leak.query.filter(Leak.email.like(s + "." + N + "%")).all()
+				res += Leak.query.filter(Leak.email.like(N + "." + s + "%")).all()
+				res += Leak.query.filter(Leak.email.like(S + "." + N + "%")).all()
+				res += Leak.query.filter(Leak.email.like(N + "." + S + "%")).all()
+				res += Leak.query.filter(Leak.email.like(S + n + "%")).all()
+				res += Leak.query.filter(Leak.email.like(n + S + "%")).all()
+				res += Leak.query.filter(Leak.email.like(s + N + "%")).all()
+				res += Leak.query.filter(Leak.email.like(N + s + "%")).all()
+				res += Leak.query.filter(Leak.email.like(S + N + "%")).all()
+				res += Leak.query.filter(Leak.email.like(N + S + "%")).all()
+				return render_template('home.html', search_query=search_query, result_list=res)
+			elif len(name_surname) == 1:
+			    res = Leak.query.filter(Leak.email.like(search_query + "%")).all()
+                return render_template('home.html', search_query=search_query, result_list=res)
+
 
 if __name__ == '__main__':
     app.run(debug=True)

@@ -48,10 +48,10 @@ def homepage():
     else:
 		if validate_email(search_query):
 			res = Leak.query.filter_by(search_query=search_query).all()
-			return render_template('home.html', search_query=search_query, source=res)
+			return render_template('home.html', search_query=search_query, result_list=res)
 		else:
 			res = Leak.query.filter(Leak.message.like(search_query+"%")).all()
-			return render_template('home.html', search_query=search_query, source=res)
+			return render_template('home.html', search_query=search_query, result_list=res)
 
 if __name__ == '__main__':
     app.run(debug=True)

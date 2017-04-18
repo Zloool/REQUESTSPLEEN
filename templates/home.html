@@ -62,21 +62,21 @@
                     <th>Source</th>
                     <th>Password</th>
                 </tr>
-                {% if not source %}
+                {% if not result_list %}
                 <tr>
                     <td>No matches</td>
                     <td>No matches</td>
                 </tr>
                 {% else %}
-                {% for items in source %}
+                {% for item in result_list %}
                 <tr>
-                    <td>{{ items['leak_source'] }}</td>
+                    <td>{{ item['leak_source'] }}</td>
                     <td>
-                        {% if items['password'] %}
-                           {{ items['password'] }}
+                        {% if item['password'] %}
+                           {{ item['password'] }}
                         {% endif %}
-                        {% if items['password_hash'] %}
-                            {{ items['password_hash'] }}
+                        {% if item['password_hash'] %}
+                            {{ item['password_hash'] }}
                         {% endif %}
                     </td>
                 </tr>

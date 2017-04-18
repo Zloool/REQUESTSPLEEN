@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>UD</title>
+    <link href="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+        crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+        crossorigin="anonymous">
+    <link href="{{ url_for('static', filename='css/home.css') }}" rel="stylesheet" />
+</head>
+
+<body>
+    <div class="bodyGradient">
+        <header class="navbar navbar-inverse navbar-static-top">
+            <div class="container">
+                <div class="navbar-header">
+                    <h1>Request Spleen</h1>
+                </div>
+            </div>
+        </header>
+        <div class="main">
+            <div class="container text-center">
+                <h3>In Search of passwords</h3>
+            </div>
+        </div>
+        <div id="searchContainer" class="secondaryHeader">
+            <div class="container">
+                <form class="navbar-collapse" action="/" method="get">
+                    <div class="input-group">
+                        <input type="text" class="form-control" placeholder="Enter credentials..." name="srch"><br>
+                        <div class="input-group-btn">
+                            <button class="btn btn-default" type="submit">Search</button><br>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div id="invalidAccount" class="pwnedSearchResult panel-collapse  collapse ">
+        <div class="container">
+            <div class="row pwnResultBanner">
+                <h2>
+                </h2>
+            </div>
+        </div>
+    </div>
+    <div class="container text-center">
+        <div class="row pwnedSummaryRow">
+            <div>
+                {% if not email %}
+                <h3>Let's start</h3>
+                {% else %}
+                <h3>Search Result for : {{ email }}</h3>
+                {% endif %}
+            </div>
+        </div>
+        <hr/>
+        <table style="table-layout: fixed;" class="table">
+            {% if email %}
+                <tr>
+                    <th>Source</th>
+                    <th>Password</th>
+                </tr>
+                {% if not source %}
+                <tr>
+                    <td>No matches</td>
+                    <td>No matches</td>
+                </tr>
+                {% else %}
+                {% for items in source %}
+                <tr>
+                    <td>{{ items['leak_source'] }}</td>
+                    <td>
+                        {% if items['password'] %}
+                           {{ items['password'] }}
+                        {% endif %}
+                        {% if items['password_hash'] %}
+                            {{ items['password_hash'] }}
+                        {% endif %}
+                    </td>
+                </tr>
+                {% endfor %}
+                {% endif %}
+            {% endif %}
+            <table>
+                <footer>
+                    <div class="container text-center">
+                        <hr/>
+                        <p><a href="/">A Under Defense project</a></p>
+                    </div>
+                </footer>
+</body>
+
+</html>

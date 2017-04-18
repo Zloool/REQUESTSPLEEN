@@ -42,16 +42,16 @@ class Leak(db.Model):
 
 @app.route("/")
 def homepage():
-    email = request.args.get("srch")
-    if not email:
+    search_query = request.args.get("srch")
+    if not search_query:
         return render_template('home.html')
     else:
-		if validate_email(email):
-			res = Leak.query.filter_by(email=email).all()
-			return render_template('home.html', email=email, source=res)
+		if validate_email(search_query):
+			res = Leak.query.filter_by(search_query=search_query).all()
+			return render_template('home.html', search_query=search_query, source=res)
 		else:
-			res = Leak.query.filter(Leak.message.like('"'+email+'%"')).all()
-			return render_template('home.html', email=email, source=res)
+			res = Leak.query.filter(Leak.message.like(search_query+"%")).all()
+			return render_template('home.html', search_query=search_query, source=res)
 
 if __name__ == '__main__':
     app.run(debug=True)

@@ -48,16 +48,16 @@
     <div class="container text-center">
         <div class="row pwnedSummaryRow">
             <div>
-                {% if not email %}
+                {% if not search_query %}
                 <h3>Let's start</h3>
                 {% else %}
-                <h3>Search Result for : {{ email }}</h3>
+                <h3>Search Result for : {{ search_query }}</h3>
                 {% endif %}
             </div>
         </div>
         <hr/>
         <table style="table-layout: fixed;" class="table">
-            {% if email %}
+            {% if search_query %}
                 <tr>
                     <th>Source</th>
                     <th>Password</th>

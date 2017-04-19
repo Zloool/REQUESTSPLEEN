@@ -9,19 +9,18 @@
         crossorigin="anonymous">
     <link href="{{ url_for('static', filename='css/home.css') }}" rel="stylesheet" />
 </head>
-
 <body>
     <div class="bodyGradient">
         <header class="navbar navbar-inverse navbar-static-top">
             <div class="container">
                 <div class="navbar-header">
-                    <h1>Request Spleen</h1>
+                    <h1><a style="background-color:transparent" href="/">Request Spleen</a></h1>
                 </div>
             </div>
         </header>
         <div class="main">
             <div class="container text-center">
-                <h3>In Search of passwords</h3>
+                <h3>In search for passwords</h3>
             </div>
         </div>
         <div id="searchContainer" class="secondaryHeader">
@@ -60,6 +59,7 @@
             {% if search_query %}
                 <tr>
                     <th>Source</th>
+                    <th>Email</th>
                     <th>Password</th>
                 </tr>
                 {% if not result_list %}
@@ -71,6 +71,7 @@
                 {% for item in result_list %}
                 <tr>
                     <td>{{ item['leak_source'] }}</td>
+                    <td>{{ item['email'] }}</td>
                     <td>
                         {% if item['password'] %}
                            {{ item['password'] }}

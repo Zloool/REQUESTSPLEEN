@@ -43,6 +43,7 @@ class LeaksIterator:
                     {'email': email, 'password_hash': password, 'leak_source': 'exploit_in'})
                 x += 1
             except Exception as e:
+                print line,
                 print e
         # print "end loop"
         return leaks

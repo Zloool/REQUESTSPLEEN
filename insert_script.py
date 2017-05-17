@@ -37,8 +37,10 @@ class LeaksIterator:
             try:
                 #res = re.findall(r'.*\:(?P<email>.*@.*)\:.*\:(?P<pass>.*)', line)
                 res = re.findall(r'(?P<email>.*@.*)\:(?P<pass>.*)', line)
+                email = res[0][0].rstrip(' \t\r\n\0')
+                password = res[0][1].rstrip(' \t\r\n\0')
                 leaks.append(
-                    {'email': res[0][0], 'password_hash': res[0][1], 'leak_source': 'exploit_in'})
+                    {'email': email, 'password_hash': password, 'leak_source': 'exploit_in'})
                 x += 1
             except Exception as e:
                 pass

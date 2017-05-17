@@ -2,6 +2,7 @@ import re
 import time
 from os import listdir
 from os.path import isfile, join
+import string
 
 import sqlalchemy as sa
 from flask import Flask
@@ -30,7 +31,9 @@ class LeaksIterator:
         x = 0
         # print "begin loop"
         while x < 10000:
-            line = self.leak_file.readline().decode("utf-8", "ignore")
+            line_raw = self.leak_file.readline()
+            printable = set(string.printable)
+            line = filter(lambda x: x in printable, line_raw)
             if not line:
                 self.leak_file.close()
                 raise StopIteration
@@ -120,7 +123,8 @@ def load_fill_from_reader(source, t_start, file_string):
 
 if __name__ == "__main__":
     start_time = time.time()
-    mypath = "/mnt/c/Users/Zlooo/Documents/Exploit.in/"
+    #mypath = "/mnt/c/Users/Zlooo/Documents/Exploit.in/"
+    mypath = "/home/ubuntu/exploet/"
     onlyfiles = [f for f in listdir(mypath) if isfile(join(mypath, f))]
     x = 0
     for leak_file in onlyfiles:

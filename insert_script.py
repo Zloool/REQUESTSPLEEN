@@ -36,7 +36,7 @@ class LeaksIterator:
                 raise StopIteration
             try:
                 #res = re.findall(r'.*\:(?P<email>.*@.*)\:.*\:(?P<pass>.*)', line)
-                res = re.findall(r'(?P<email>.*@.*)\:(?P<pass>.*)', line)
+                res = re.findall(r'(?P<email>.*@.*)(\:|;)(?P<pass>.*)', line)
                 email = res[0][0].replace(' \t\r\n\0\\', '')
                 password = res[0][1].replace(' \t\r\n\0\\', '')
                 leaks.append(

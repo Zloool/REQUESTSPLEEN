@@ -30,15 +30,15 @@ class LeaksIterator:
         x = 0
         # print "begin loop"
         while x < 10000:
-            line = self.leak_file.readline()
+            line = self.leak_file.readline().decode("utf-16", "ignore")
             if not line:
                 self.leak_file.close()
                 raise StopIteration
             try:
                 #res = re.findall(r'.*\:(?P<email>.*@.*)\:.*\:(?P<pass>.*)', line)
                 res = re.findall(r'(?P<email>.*@.*)\:(?P<pass>.*)', line)
-                email = res[0][0].rstrip(' \t\r\n\0')
-                password = res[0][1].rstrip(' \t\r\n\0')
+                email = res[0][0].replace(' \t\r\n\0', '')
+                password = res[0][1].replace(' \t\r\n\0', '')
                 leaks.append(
                     {'email': email, 'password_hash': password, 'leak_source': 'exploit_in'})
                 x += 1

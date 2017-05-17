@@ -30,20 +30,20 @@ class LeaksIterator:
         x = 0
         # print "begin loop"
         while x < 10000:
-            line = self.leak_file.readline().decode("utf-16", "ignore")
+            line = self.leak_file.readline().decode("utf-8", "ignore")
             if not line:
                 self.leak_file.close()
                 raise StopIteration
             try:
                 #res = re.findall(r'.*\:(?P<email>.*@.*)\:.*\:(?P<pass>.*)', line)
                 res = re.findall(r'(?P<email>.*@.*)\:(?P<pass>.*)', line)
-                email = res[0][0].replace(' \t\r\n\0', '')
-                password = res[0][1].replace(' \t\r\n\0', '')
+                email = res[0][0].replace(' \t\r\n\0\\', '')
+                password = res[0][1].replace(' \t\r\n\0\\', '')
                 leaks.append(
                     {'email': email, 'password_hash': password, 'leak_source': 'exploit_in'})
                 x += 1
             except Exception as e:
-                pass
+                print e
         # print "end loop"
         return leaks
 
@@ -119,7 +119,7 @@ def load_fill_from_reader(source, t_start, file_string):
 
 if __name__ == "__main__":
     start_time = time.time()
-    mypath = "C:\\Users\\Zlooo\\Documents\\Exploit.in\\"
+    mypath = "/mnt/c/Users/Zlooo/Documents/Exploit.in/"
     onlyfiles = [f for f in listdir(mypath) if isfile(join(mypath, f))]
     x = 0
     for leak_file in onlyfiles:

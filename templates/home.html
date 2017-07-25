@@ -48,7 +48,25 @@
         <div class="row pwnedSummaryRow">
             <div>
                 {% if not search_query %}
-                <h3>Let's start</h3>
+                <h3>Query examples:</h3>
+                <table style="table-layout: fixed;" class="table">
+                    <tr>
+                        <td>john@smith.com</td>
+                        <td>Show presence of this email in all leaks.</td>
+                    </tr>
+                    <tr>
+                        <td>@smith.com</td>
+                        <td>Find all emails, from this domain.</td>
+                    </tr>
+                    <tr>
+                        <td>Joht Smith</td>
+                        <td>Try to search for all emails, assosiated with John Smith</td>
+                    </tr>
+                    <tr>
+                        <td>HandsomeGuy88</td>
+                        <td>Try to search for all emails, that have HandsomeGuy88 in it.</td>
+                    </tr>
+                </table>
                 {% else %}
                 <h3>Search Result for : {{ search_query }}</h3>
                 {% endif %}
